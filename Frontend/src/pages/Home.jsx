@@ -142,6 +142,10 @@ const Home = () => {
 
         </div>
       </section>
+
+      {/*==== About section start ===== */}
+
+      {/*==== About section End ===== */}
     </>
   )
 }
