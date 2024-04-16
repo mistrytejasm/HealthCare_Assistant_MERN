@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, Link } from 'react-router-dom'; // Added Link import
+import { NavLink, Link } from 'react-router-dom'; 
 import logo from "D:/HealthCare Assistant/Frontend/src/assets/images/logo.png";
 import userImg from "D:/HealthCare Assistant/Frontend/src/assets/images/avatar-icon.png";
 import {BiMenu} from "react-icons/bi";

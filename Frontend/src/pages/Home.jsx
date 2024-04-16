@@ -7,6 +7,7 @@ import icon02 from 'D:/HealthCare Assistant/Frontend/src/assets/images/icon02.pn
 import icon03 from 'D:/HealthCare Assistant/Frontend/src/assets/images/icon03.png';
 import { Link } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs'
+import About from '../components/About/About';
 
 
 const Home = () => {
@@ -138,14 +139,9 @@ const Home = () => {
               </Link>
             </div>
           </div>
-
-
         </div>
       </section>
-
-      {/*==== About section start ===== */}
-
-      {/*==== About section End ===== */}
+      <About />
     </>
   )
 }
