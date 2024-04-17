@@ -12,6 +12,8 @@ import ServiceList from '../components/Services/ServiceList';
 import featureImg from '../assets/images/feature-img.png';
 import videoIcon from '../assets/images/video-icon.png'
 import avatarImg from '../assets/images/avatar-icon.png'
+import DoctorList from '../components/Doctors/DoctorList';
+
 
 const Home = () => {
   return (
@@ -209,16 +211,31 @@ const Home = () => {
                 <div className='w-[65px] lg:w-[96px] bg-[#CCF0F3] py-1 px-2 lg:py-[6px] lg:px-[10px] text-[8px] leading-[8px] lg:text-[12px] lg:leading-4 text-irisBlueColor font-[500]  mt-2 lg:mt-4 rounded-full'>
                   Consultation
                 </div>
-              <div className='flex items-center gap-[6px] lg:gap-[10px] mt-2 lg:mt-[18px]'>
-                <img src={avatarImg} alt="" />
-                <h4 className='text-[10px] leading-3 lg:text-[16px] lg:leading-[22px] font-[700] text-headingColor'>Peter Thiel</h4>
-              </div>
+                <div className='flex items-center gap-[6px] lg:gap-[10px] mt-2 lg:mt-[18px]'>
+                  <img src={avatarImg} alt="" />
+                  <h4 className='text-[10px] leading-3 lg:text-[16px] lg:leading-[22px] font-[700] text-headingColor'>Peter Thiel</h4>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
       {/*===== feature section end =====*/}
+      {/*=== our great doctors =====*/}
+      <section>
+        <div className='container'>
+          <div className='xl:w-[470px] mx-auto'>
+            <h2 className='heading text-center'>Our Great Doctors</h2>
+            <p className='text_para text-center'>
+              World-Class care for everyone. our health system offers unmatched, expert health care.
+            </p>
+          </div>
+
+          <DoctorList />
+        </div>
+      </section>
+
+      {/*=== our great doctors =====*/}
     </>
   )
 }
