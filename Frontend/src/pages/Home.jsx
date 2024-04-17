@@ -8,6 +8,7 @@ import icon03 from 'D:/HealthCare Assistant/Frontend/src/assets/images/icon03.pn
 import { Link } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs'
 import About from '../components/About/About';
+import ServiceList from '../components/Services/ServiceList';
 
 
 const Home = () => {
@@ -142,6 +143,21 @@ const Home = () => {
         </div>
       </section>
       <About />
+
+      {/*==== service section ====*/}
+      <section>
+        <div className='container'>
+          <div className='xl:w-[470px] mx-auto'>
+            <h2 className='heading text-center'>Our Medical Services</h2>
+            <p className='text_para text-center'>
+              World-Class care for everyone. our health system offers unmatched, expert health care.
+            </p>
+          </div>
+
+          <ServiceList></ServiceList>
+        </div>
+      </section>
+      {/*==== service section ====*/}
     </>
   )
 }
