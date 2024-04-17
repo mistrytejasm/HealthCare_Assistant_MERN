@@ -6,13 +6,15 @@ import icon01 from 'D:/HealthCare Assistant/Frontend/src/assets/images/icon01.pn
 import icon02 from 'D:/HealthCare Assistant/Frontend/src/assets/images/icon02.png';
 import icon03 from 'D:/HealthCare Assistant/Frontend/src/assets/images/icon03.png';
 import { Link } from 'react-router-dom';
-import { BsArrowRight } from 'react-icons/bs'
+import { BsArrowRight } from 'react-icons/bs';
 import About from '../components/About/About';
 import ServiceList from '../components/Services/ServiceList';
 import featureImg from '../assets/images/feature-img.png';
-import videoIcon from '../assets/images/video-icon.png'
-import avatarImg from '../assets/images/avatar-icon.png'
+import videoIcon from '../assets/images/video-icon.png';
+import avatarImg from '../assets/images/avatar-icon.png';
 import DoctorList from '../components/Doctors/DoctorList';
+import faqImg from '../assets/images/faq-img.png';
+import FaqList from '../components/Faq/FaqList';
 
 
 const Home = () => {
@@ -161,7 +163,7 @@ const Home = () => {
           <ServiceList></ServiceList>
         </div>
       </section>
-      {/*==== service section ====*/}
+      {/*==== service section end ====*/}
 
       {/*===== feature section start =====*/}
       <section>
@@ -234,10 +236,30 @@ const Home = () => {
           <DoctorList />
         </div>
       </section>
-
       {/*=== our great doctors =====*/}
-    </>
-  )
-}
 
-export default Home
+      {/*=== faq section start ===*/}
+      <section>
+        <div className='container'>
+          <div className='flex justify-between gap-[50px] lg:gap-0'>
+            <div className='w-1/2 hidden md:block'>
+              <img src={faqImg} alt="" />
+            </div>
+
+            <div className='w-full md:w-1/2'>
+              <h2 className='heading'>Most questions by our beloved patients</h2>
+              
+            <FaqList/>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/*=== faq section end ====*/}
+
+      {/*=== testimonial start ====*/}
+      {/*=== testimonial end ====*/}
+    </>
+  );
+};
+
+export default Home;
