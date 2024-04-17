@@ -92,22 +92,22 @@ const Footer = () => {
               </Link>)}
             </div>
           </div>
-          {/* ==== start= === */ }
+          {/* ==== start= === */}
           <div>
             <h2 className='text-[20px] leading-[30px] font-[700] mb-6 text-headingColor'>
               Quicklinks
             </h2>
 
             <ul>
-              {quicklinks01.map((item,index) => (
+              {quicklinks01.map((item, index) => (
                 <li key={index} className='mb-4'>
-                  <Link to={item.path} className='text-[16px] leading-7 font-[400 text-textColor]'>{item.display}
+                  <Link to={item.path} className='text-[16px] leading-7 font-[400] text-textColor'>{item.display}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
-          {/* ==== end= === */ }
+          {/* ==== end= === */}
 
           <div>
             <h2 className='text-[20px] leading-[30px] font-[700] mb-6 text-headingColor'>
@@ -115,7 +115,7 @@ const Footer = () => {
             </h2>
 
             <ul>
-              {quicklinks02.map((item,index) => (
+              {quicklinks02.map((item, index) => (
                 <li key={index} className='mb-4'>
                   <Link to={item.path} className='text-[16px] leading-7 font-[400 text-textColor]'>{item.display}
                   </Link>
@@ -126,11 +126,11 @@ const Footer = () => {
 
           <div>
             <h2 className='text-[20px] leading-[30px] font-[700] mb-6 text-headingColor'>
-              Quicklinks
+              Support
             </h2>
 
             <ul>
-              {quicklinks03.map((item,index) => (
+              {quicklinks03.map((item, index) => (
                 <li key={index} className='mb-4'>
                   <Link to={item.path} className='text-[16px] leading-7 font-[400 text-textColor]'>{item.display}
                   </Link>
