@@ -1,13 +1,12 @@
 import React from 'react'
-
-import Header from 'D:/HealthCare Assistant/Frontend/src/components/Header/header';
-import Footer from 'D:/HealthCare Assistant/Frontend/src/components/Footer/Footer';
+import Header from '../components/Header/header';
+import Footer from '../components/Footer/Footer';
 import Routers from '../routes/Routers';
 
 const Layout = () => {
   return (
     <>
-    <Header />
+    <Header/>
     <main>
       <Routers />
     </main>

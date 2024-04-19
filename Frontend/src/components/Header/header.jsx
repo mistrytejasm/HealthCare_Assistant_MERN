@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom'; 
-import logo from "D:/HealthCare Assistant/Frontend/src/assets/images/logo.png";
-import userImg from "D:/HealthCare Assistant/Frontend/src/assets/images/avatar-icon.png";
+import logo from "../../assets/images/logo.png";
+import userImg from "../../assets/images/avatar-icon.png";
 import {BiMenu} from "react-icons/bi";
 import { useRef } from 'react';
 import { useEffect } from 'react';
