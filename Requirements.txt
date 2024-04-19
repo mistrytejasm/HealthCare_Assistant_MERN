@@ -1,0 +1,2 @@
+# install below packages for backend
+npm i express mongodb mongoose cors jsonwebtoken cookie-parser dotenv bcryptjs nodemon

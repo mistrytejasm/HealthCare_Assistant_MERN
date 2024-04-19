@@ -7,8 +7,8 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const app = express()
-const port = process.env.PORT
-console.log(process.env.MONGO_URL) 
+const port = process.env.PORT || 8000
+// console.log(process.env.MONGO_URL) 
 
 const corsOptions = {
   origin:true
