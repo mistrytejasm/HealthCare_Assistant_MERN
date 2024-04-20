@@ -1,104 +1,102 @@
 import User from '../models/UserSchema.js';
 import Doctor from '../models/DoctorSchema.js';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs'; // Import bcrypt library
+import bcrypt from 'bcryptjs';
 
-
-const generateToken = user =>{
-  return jwt.sign({id:user._id, role:user.role}, process.env.JWT_SECRET_KEY,{
+const generateToken = user => {
+  return jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET_KEY, {
     expiresIn: '15d',
-  })
-}
+  });
+};
 
 export const register = async (req, res) => {
   const { email, password, name, role, photo, gender } = req.body;
 
   try {
-    let user = null;
-
+    // Check if the email already exists
+    let existingUser;
     if (role === 'patient') {
-      user = await User.findOne({ email });
+      existingUser = await User.findOne({ email });
     } else if (role === 'doctor') {
-      user = await Doctor.findOne({ email });
+      existingUser = await Doctor.findOne({ email });
     }
 
-    // Check if user exists
-    if (user) {
+    if (existingUser) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    // Hash password
+    // Hash the password
     const salt = await bcrypt.genSalt(10);
-    const hashPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
+    let newUser;
     if (role === 'patient') {
-      user = new User({
+      newUser = new User({
         name,
         email,
-        password: hashPassword,
+        password: hashedPassword,
+        photo,
+        gender,
+        role,
+      });
+    } else if (role === 'doctor') {
+      newUser = new Doctor({
+        name,
+        email,
+        password: hashedPassword,
         photo,
         gender,
         role,
       });
     }
 
-    if (role === 'doctor') {
-      user = new Doctor({
-        name,
-        email,
-        password: hashPassword,
-        photo,
-        gender,
-        role,
-      });
-    }
-
-    await user.save();
+    await newUser.save();
 
     res.status(200).json({ success: true, message: 'User successfully created' });
-  } catch (err) {
+  } catch (error) {
+    console.error('Error in register:', error);
     res.status(500).json({ success: false, message: 'Internal server error, Try again' });
   }
 };
 
 export const login = async (req, res) => {
-
-  const {email} = req.body
+  const { email, password } = req.body;
 
   try {
-    let user = null
+    // Find the user by email
+    let user;
+    const patient = await User.findOne({ email });
+    const doctor = await Doctor.findOne({ email });
 
-    const patient = await User.findOne({email})
-    const doctor = await Doctor.findOne({email})
-
-    if(patient){
-      user = patient
-    }
-    if(doctor){
-      user=doctor
-    } 
-
-    // check if user is exist or not
-    if(!user){
-      return res.status(404).json({ message: "User Not Found"})
+    if (patient) {
+      user = patient;
+    } else if (doctor) {
+      user = doctor;
+    } else {
+      return res.status(404).json({ message: 'User not found' });
     }
 
-    // compare password
-    const isPasswordMatch = await bcrypt.compare(req.body.password, user.password)
+    // Compare passwords
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
 
-    if(!isPasswordMatch){
-      return res.status(400).json({status:false, message:'invalid credentials'})
+    if (!isPasswordMatch) {
+      return res.status(400).json({ status: false, message: 'Invalid credentials' });
     }
 
-    // get token
-    const token = generateToken(user)
+    // Generate token
+    const token = generateToken(user);
 
-    const {password, role, appointments, ...rest} = user._doc
+    // Remove sensitive data from user object
+    const { password: _, ...userData } = user._doc;
 
-    res.status(200).json({status:true, message:'Successfully login', token, date:{...rest}, role,})
-
-  } catch (err) {
-    // Handle error
-    res.status(500).json({status:false, message:'Failed To login'})
+    res.status(200).json({
+      status: true,
+      message: 'Successfully logged in',
+      token,
+      user: userData,
+    });
+  } catch (error) {
+    console.error('Error in login:', error);
+    res.status(500).json({ status: false, message: 'Failed to login' });
   }
 };

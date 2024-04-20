@@ -3,53 +3,51 @@ import Doctor from '../models/DoctorSchema.js';
 import User from '../models/UserSchema.js';
 
 export const authenticate = async (req, res, next) => {
-  // get token from headers
+  // Get token from headers
   const authToken = req.headers.authorization;
 
-  //check token is exists
+  // Check if token exists and has the correct format
   if (!authToken || !authToken.startsWith("Bearer")){
-    return res.status(401).json({success:false, message:"No token, authorization denied"})
+    return res.status(401).json({success:false, message:"No token, authorization denied"});
   }
 
-  try{
-    
+  try {
+    // Extract the token value
     const token = authToken.split(" ")[1];
 
-    // verfy token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
-    req.userId = decoded.id
-    req.role = decoded.role
+    // Extract user ID and role from decoded token and add to request object
+    req.userId = decoded.id;
+    req.role = decoded.role;
 
-    next(); // must be call the next function
-  } catch(err){
-
+    next(); // Call the next middleware function
+  } catch(err) {
+    // Handle token verification errors
     if(err.name === "TokenExpiredError"){
-      return res.status(401).json({message:"Token is Expired"})
+      return res.status(401).json({message:"Token is Expired"});
     }
-
-    return res.status(401).json({success:false, message:"Invalid Token"})
+    return res.status(401).json({success:false, message:"Invalid Token"});
   }
 };
 
 export const restrict = roles => async (req, res, next) => {
-  const userId = req.userId;
+  try {
+    const userId = req.userId;
 
-  let user;
+    // Find user based on user ID
+    const user = await User.findById(userId) || await Doctor.findById(userId);
 
-  const patient = await User.findById(userId);
-  const doctor= await Doctor.findById(userId);
+    // If user not found or role not included in the allowed roles, deny access
+    if (!user || !roles.includes(user.role)) {
+      return res.status(401).json({success:false, message: "You're not authorized"});
+    }
 
-  if (patient){
-    user = patient;
+    next(); // Call the next middleware function
+  } catch (err) {
+    // Handle errors
+    console.error("Restrict middleware error:", err);
+    return res.status(500).json({success: false, message: "Internal Server Error"});
   }
-  if (doctor){
-    user = doctor;
-  }
-
-  if (!roles.includes(user.role)){
-    return res.status(401).json({success:false, messsage: "You're not authorized"});
-  }
-
-  next();
 };
