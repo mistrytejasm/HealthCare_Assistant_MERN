@@ -1,8 +1,8 @@
 import React from 'react';
-import { NavLink, Link } from 'react-router-dom'; 
+import { NavLink, Link } from 'react-router-dom';
 import logo from "../../assets/images/logo.png";
 import userImg from "../../assets/images/avatar-icon.png";
-import {BiMenu} from "react-icons/bi";
+import { BiMenu } from "react-icons/bi";
 import { useRef } from 'react';
 import { useEffect } from 'react';
 
@@ -30,23 +30,23 @@ const Header = () => {
   const headerRef = useRef(null)
   const menuref = useRef(null)
 
-  const handleStickyHeader = ()=> {
-    window.addEventListener('scroll', ()=>{
-      if(document.body.scrollTop > 80 || document.documentElement.scrollTop > 80){
+  const handleStickyHeader = () => {
+    window.addEventListener('scroll', () => {
+      if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
         headerRef.current.classList.add('sticky__header')
-      }else{
+      } else {
         headerRef.current.classList.remove('sticky__header')
       }
     })
   }
 
-  useEffect((()=>{
+  useEffect((() => {
     handleStickyHeader()
 
-    return ()=> window.removeEventListener('scroll', handleStickyHeader)
+    return () => window.removeEventListener('scroll', handleStickyHeader)
   }))
 
-  const toggleMenu = ()=> menuref.current.classList.toggle('show__menu')
+  const toggleMenu = () => menuref.current.classList.toggle('show__menu')
 
   return (
     <header className='header flex item-center' ref={headerRef}>
@@ -85,7 +85,7 @@ const Header = () => {
 
             <Link to='/login'>
               <button className="bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]">
-                Login 
+                Login
               </button>
             </Link>
 

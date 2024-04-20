@@ -26,7 +26,7 @@
   }
 
   .header {
-    background-image: url('D:/HealthCare Assistant/Frontend/src/assets/images/mask.png');
+    background-image: url('./assets/images/mask.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -36,7 +36,7 @@
   }
   
   .hero__section {
-    background-image: url('D:/HealthCare Assistant/Frontend/src/assets/images/hero-bg.png');
+    background-image: url('./assets/images/hero-bg.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
