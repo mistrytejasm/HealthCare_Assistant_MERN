@@ -8,7 +8,7 @@ export const getAllReviews = async (req,res) => {
 
     res.status(200).json({success:true, message:"Successful", data:reviews});
   } catch (err){
-    res.states(404).json({success:false, message:"Not found"});
+    res.status(404).json({success:false, message:"Not found"});
   }
 };
 
