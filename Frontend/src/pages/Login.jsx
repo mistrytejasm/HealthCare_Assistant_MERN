@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../config';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../context/AuthContext.jsx';
+import HashLoader from 'react-spinners/HashLoader';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -45,7 +46,6 @@ const Login = () => {
 
       const result = await res.json();
 
-      console.log('Login Server Response:', result); // Check backend response
 
       if (!res.ok) {
         throw new Error(result.message);
@@ -54,11 +54,13 @@ const Login = () => {
       dispatch({
         type: 'LOGIN_SUCCESS',
         payload: {
-          user: result.data?.user, // Validate that the data exists
-          token: result.data?.token,
-          role: result.data?.role,
+          user: result.user, // Validate that the data exists
+          token: result.token,
+          role: result.role,
         },
       });
+
+      console.log(result, "login data")
 
       toast.success('Login successful! Welcome back!');
       navigate('/home');
@@ -107,7 +109,7 @@ const Login = () => {
               type='submit'
               className='w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3'
             >
-              {loading ? 'Loading...' : 'Login'}
+              {loading ? <HashLoader size={25} color='#fff'/> : 'Login'}
             </button>
           </div>
 
