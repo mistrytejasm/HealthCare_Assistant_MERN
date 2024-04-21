@@ -15,13 +15,17 @@ const Login = () => {
   const { dispatch } = useContext(AuthContext);
 
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const submitHandler = async (event) => {
     event.preventDefault();
 
-    console.log('Form Data:', formData); // this should work now with corrected variable name
+    console.log('Login Form Data:', formData); // Confirm form data
 
     if (!formData.email || !formData.password) {
       toast.error('Please fill in all required fields.');
@@ -36,10 +40,12 @@ const Login = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData), // ensure you're referencing the correct variable
+        body: JSON.stringify(formData),
       });
 
       const result = await res.json();
+
+      console.log('Login Server Response:', result); // Check backend response
 
       if (!res.ok) {
         throw new Error(result.message);
@@ -48,17 +54,17 @@ const Login = () => {
       dispatch({
         type: 'LOGIN_SUCCESS',
         payload: {
-          user: result.data,
-          token: result.token,
-          role: result.role,
+          user: result.data?.user, // Validate that the data exists
+          token: result.data?.token,
+          role: result.data?.role,
         },
       });
 
-      toast.success(result.message);
+      toast.success('Login successful! Welcome back!');
       navigate('/home');
     } catch (err) {
-      toast.error(err.message);
       console.error('Login Error:', err);
+      toast.error(err.message || 'Login failed. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -77,10 +83,10 @@ const Login = () => {
               type='email'
               placeholder='Enter Your Email'
               name='email'
-              value={formData.email} // reference to corrected variable name
+              value={formData.email}
               onChange={handleInputChange}
-              className='w-full  py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer'
-              required  
+              className='w-full py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer'
+              required
             />
           </div>
 
@@ -89,10 +95,10 @@ const Login = () => {
               type='password'
               placeholder='Password'
               name='password'
-              value={formData.password} // correct variable name
+              value={formData.password}
               onChange={handleInputChange}
-              className='w-full  py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer'
-              required  
+              className='w-full py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer'
+              required
             />
           </div>
 
