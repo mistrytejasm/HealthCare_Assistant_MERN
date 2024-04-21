@@ -1,14 +1,67 @@
-import React, { useState } from 'react'
-import {Link} from 'react-router-dom'
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../config';
+import { toast } from 'react-toastify';
+import { AuthContext } from '../context/AuthContext.jsx';
 
 const Login = () => {
-  const [FormData, setFormData] = useState({
+  const [formData, setFormData] = useState({
     email: '',
-    password:'',
+    password: '',
   });
 
-  const handleInputChange = e => {
-    setFormData({ ...FormData, [e.target.name]: e.target.value });
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const { dispatch } = useContext(AuthContext);
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const submitHandler = async (event) => {
+    event.preventDefault();
+
+    console.log('Form Data:', formData); // this should work now with corrected variable name
+
+    if (!formData.email || !formData.password) {
+      toast.error('Please fill in all required fields.');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const res = await fetch(`${BASE_URL}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData), // ensure you're referencing the correct variable
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result.message);
+      }
+
+      dispatch({
+        type: 'LOGIN_SUCCESS',
+        payload: {
+          user: result.data,
+          token: result.token,
+          role: result.role,
+        },
+      });
+
+      toast.success(result.message);
+      navigate('/home');
+    } catch (err) {
+      toast.error(err.message);
+      console.error('Login Error:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -18,55 +71,50 @@ const Login = () => {
           Hello! <span className='text-primaryColor'>Welcome</span> Back 🎉
         </h3>
 
-        <form className='py-4 md:py-0'>
+        <form className='py-4 md:py-0' onSubmit={submitHandler}>
           <div className='mb-5'>
             <input
-            type='email'
-            placeholder='Enter Your Email'
-            name='email'
-            value={FormData.email}
-            onChange={handleInputChange}
-            className='w-full  py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer'
-            required  
+              type='email'
+              placeholder='Enter Your Email'
+              name='email'
+              value={formData.email} // reference to corrected variable name
+              onChange={handleInputChange}
+              className='w-full  py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer'
+              required  
             />
           </div>
 
           <div className='mb-5'>
             <input
-            type='password'
-            placeholder='Password'
-            name='password'
-            value={FormData.password}
-            onChange={handleInputChange}
-            className='w-full  py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer'
-            required  
+              type='password'
+              placeholder='Password'
+              name='password'
+              value={formData.password} // correct variable name
+              onChange={handleInputChange}
+              className='w-full  py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer'
+              required  
             />
           </div>
 
           <div className='mt-7'>
             <button
-            type='submit'
-            className='w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3'
+              type='submit'
+              className='w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3'
             >
-              Login
+              {loading ? 'Loading...' : 'Login'}
             </button>
           </div>
 
           <p className='mt-5 text-textColor text-center'>
-            Don&apos;t have an account? {" "} 
+            Don&apos;t have an account?{' '}
             <Link to='/register' className='text-primaryColor font-medium ml-1'>
               Register
             </Link>
-
           </p>
-        </form>
+        </form> 
       </div>
     </section>
-  )
-}
+  );
+};
 
-  
-
-  
-export default Login
-
+export default Login;
