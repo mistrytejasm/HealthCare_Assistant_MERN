@@ -16,6 +16,6 @@ userRoute.get("/", authenticate, restrict(['admin']),getAllUser);
 userRoute.put("/:id",authenticate, restrict(['patient']),updateUser);
 userRoute.delete("/:id", authenticate, restrict(['patient']),deleteUser);
 userRoute.get("/profile/me", authenticate, restrict(['patient']),getUserProfile);
-userRoute.get("appointmentss/my-appointments", authenticate, restrict(['patient']),getMyAppointment);
+userRoute.get("/appointments/my-appointments", authenticate, restrict(['patient']),getMyAppointment);
 
 export default userRoute;

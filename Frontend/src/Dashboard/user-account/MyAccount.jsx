@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react';
-import useImg from '../../assets/images/doctor-img01.png';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from './../../context/AuthContext';
 import MyBooking from './MyBooking';
@@ -38,7 +37,7 @@ const MyAccount = () => {
           <div className='pb-[50px] px-[30px] rounded-md'>
             <div className='flex items-center justify-center'>
               <figure className='w-[100px] h-[100px] rounded-full border-2 border-solid border-primaryColor'>
-                <img src={userData?.profileImage || useImg} alt='' className='w-full h-full rounded-full' />
+                <img src={userData.photo} alt='' className='w-full h-full rounded-full' />
               </figure>
             </div>
 
@@ -49,10 +48,10 @@ const MyAccount = () => {
                 <p>Error: {error}</p>
               ) : (
                 <>
-                  <h3 className='text-[18px] leading-[30px] text-headingColor font-bold'>{userData?.name || "Name"}</h3>
-                  <p className='text-textColor text-[15px] leading-6 font-medium'>{userData?.email || "Email"}</p>
+                  <h3 className='text-[18px] leading-[30px] text-headingColor font-bold'>{userData.name}</h3>
+                  <p className='text-textColor text-[15px] leading-6 font-medium'>{userData.email}</p>
                   <p className='text-textColor text-[15px] leading-6 font-medium'>
-                    Blood Type: <span className='ml-2 text-headingColor text-[22px] leading-8'>{userData?.bloodType || "O+"}</span>
+                    Blood Type: <span className='ml-2 text-headingColor text-[22px] leading-8'>{userData.bloodType}</span>
                   </p>
                 </>
               )}
@@ -81,7 +80,7 @@ const MyAccount = () => {
             </div>
 
             {tab === "bookings" && <MyBooking />}
-            {tab === "settings" && <Profile />}
+            {tab === "settings" && <Profile user={userData} />}
           </div>
         </div>
         }
