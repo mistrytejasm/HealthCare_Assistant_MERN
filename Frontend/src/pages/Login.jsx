@@ -21,6 +21,10 @@ const Login = () => {
       ...prevData,
       [name]: value,
     }));
+
+  // const handleInputChange = e => {
+  //   setFormData({...formData, [e.target.name]: e.target.value})
+  // }
   };
 
   const submitHandler = async (event) => {
@@ -45,6 +49,7 @@ const Login = () => {
       });
 
       const result = await res.json();
+      console.log("Server Response:", result);
 
 
       if (!res.ok) {
@@ -54,10 +59,10 @@ const Login = () => {
       dispatch({
         type: 'LOGIN_SUCCESS',
         payload: {
-          user: result.user, // Validate that the data exists
+          user: result.user, 
           token: result.token,
           role: result.role,
-        },
+        },  
       });
 
       console.log(result, "login data")

@@ -19,6 +19,7 @@ const Signup = () => {
     photo: '', // Initialize photo as an empty string
     gender: '',
     role: 'patient',
+    
   });
 
   const navigate = useNavigate();
@@ -64,6 +65,15 @@ const Signup = () => {
       if (!res.ok) {
         throw new Error(data.message);
       }
+
+      dispatch({
+        type: 'REGISTER_SUCCESS',
+        payload: {
+          user: result.user,
+          token: result.token,
+          role: result.role, // Ensure role is dispatched
+        },
+      });
   
       toast.success(data.message);
       navigate('/login');

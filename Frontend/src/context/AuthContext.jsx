@@ -12,17 +12,23 @@ const getUserFromLocalStorage = () => {
     }
   }
   return null;
-};
+};  
 
 const initialState = {
   user: getUserFromLocalStorage(), // safely get and parse 'user'
-  role: localStorage.getItem('role') || null,
+  role: localStorage.getItem('role')  || null,
   token: localStorage.getItem('token') || null,
 };
 
 
 // Create a new context
-export const AuthContext = createContext(initialState);
+export const AuthContext = createContext({
+  user: null,
+  role: null,
+  token: null,
+  dispatch: () => {}, // Default empty function
+});
+
 
 // Define the reducer function
 const authReducer = (state, action) => {
@@ -31,10 +37,11 @@ const authReducer = (state, action) => {
       return { user: null, role: null, token: null };
 
     case 'LOGIN_SUCCESS':
+      console.log("Role in LOGIN_SUCCESS:", action.payload.role);
       return {
         user: action.payload.user,
-        role: action.payload.role,
         token: action.payload.token,
+        role: action.payload.role,
       };
 
     case 'LOGOUT':
@@ -52,11 +59,11 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(()=>{
     localStorage.setItem("user", JSON.stringify(state.user));
     localStorage.setItem("token", state.token);
-    localStorage.setItem("role", state.role)
+    localStorage.setItem("role", state.role);
   }, [state]); 
 
   return (
-    <AuthContext.Provider value={{ user: state.user, token: state.token, role: state.role, dispatch }}>
+    <AuthContext.Provider value={{ user: state.user, token: state.token, role: state.role, dispatch, }}>
       {children}
     </AuthContext.Provider>
   );
