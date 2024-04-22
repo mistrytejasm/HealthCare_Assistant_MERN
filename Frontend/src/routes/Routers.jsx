@@ -23,10 +23,14 @@ const routers = () => {
       <Route path='/register' element={<Signup />} />
       <Route path='/contact' element={<Contact />} />
       <Route path='/services' element={<Services />} />
-      {/* <Route path='/users/profile/me' element={<ProtectedRoute allowedRoles={['patient']}><MyAccount /></ProtectedRoute>} />
-      <Route path='/doctors/profile/me' element={<ProtectedRoute allowedRoles={['doctor']}><Dashboard /></ProtectedRoute>} /> */}
       <Route path='/users/profile/me' element={<MyAccount />} />
       <Route path='/doctors/profile/me' element={<Dashboard />} />
+
+     {/* after login visit user_doctor profile functionality not working */}
+     
+      {/* <Route path='/users/profile/me' element={<ProtectedRoute allowedRoles={['patient']}><MyAccount /></ProtectedRoute>} />
+      <Route path='/doctors/profile/me' element={<ProtectedRoute allowedRoles={['doctor']}><Dashboard /></ProtectedRoute>} /> */}
+      
 
     </Routes>
   )
