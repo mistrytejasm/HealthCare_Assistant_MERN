@@ -74,14 +74,14 @@ const Profile = ({ user }) => {
         throw new Error(result.message);
       }
 
-      dispatch({
-        type: 'REGISTER_SUCCESS',
-        payload: {
-          user: result.user,
-          token: result.token,
-          role: result.role, // Ensure role is dispatched
-        },
-      });
+    dispatch({
+      type: 'REGISTER_SUCCESS',
+      payload: {
+        user: result.user,
+        token: result.token,
+        role: result.role, // Ensure role is dispatched
+      },
+    });
 
       toast.success(result.message);
       navigate('/users/profile/me');

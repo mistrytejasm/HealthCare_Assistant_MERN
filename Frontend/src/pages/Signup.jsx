@@ -77,7 +77,7 @@ const Signup = () => {
       toast.success(data.message);
       navigate('/login');
     } catch (err) {
-      toast.error(err.message);
+      // toast.error(err.message);
       console.error("Signup Error:", err);
     } finally {
       setLoading(false);
