@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { Navigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 
-const ProtectedRoute = ({ children, allowedRoles = [] }) => { // Default to an empty array
+const ProtectedRoute = ({ children, allowedRoles = [] }) => { 
   const { token, role } = useContext(AuthContext);
 
   console.log('Token:', token);
