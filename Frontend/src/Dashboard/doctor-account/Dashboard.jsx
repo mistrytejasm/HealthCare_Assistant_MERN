@@ -96,7 +96,7 @@ const Dashboard = () => {
               )}
 
                 {tab === "appointments" && <div>Appointments</div>}
-                {tab === "settings" && <div>Settings</div>}
+                {tab === "settings" && <Profile/>}
               </div>
             </div>
           </div>
